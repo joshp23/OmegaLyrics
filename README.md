@@ -1,9 +1,9 @@
 # OmegaLyrics
-A versitile lyrics plugin for the [Quod Libet](https://github.com/quodlibet/quodlibet) audio player
+A versitile lyrics plugin for the [Quod Libet](https://quodlibet.readthedocs.io/en/latest/) audio player
 
 ---
 
-This plugin first attempts to load either tag or file-based lyrics, and will then attempt to load lyrics from the web using the [Lyrics.ovh](https://quodlibet.readthedocs.io/en/latest/) API, if needed.
+This plugin first attempts to load either tag or file-based lyrics, and will then attempt to load lyrics from the web using the [Lyrics.ovh](https://lyrics.ovh) API, if needed.
 
 ### Installation
 - Clone this repo (or extract the `events` folder) into `~/.quodlibet/plugins` or `~./config/quodlibet/plugins` with:
