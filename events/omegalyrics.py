@@ -1,6 +1,7 @@
 #
 # Omega Lyrics: a Quod Libet plugin for viewing lyrics.
-# Version: 0.0.1
+# Version: 0.0.2
+#
 # Copyright 2008, 2011, 2012 Vasiliy Faronov <vfaronov@gmail.com>
 #           2013-17 Nick Boultbee
 #           2014 Christoph Reiter
@@ -102,15 +103,14 @@ class OmegaLyrics(EventPlugin, UserInterfacePlugin):
                 fetch_url = create_api_fetch_url(song)
                 try:
                     conn = request.urlopen(fetch_url, timeout=4.0).read()
-                except error.HTTPError as e:
-                    title = _("No lyrics found for\n %s") % song("~basename")
-                    self._set_italicised(title)
-                except error.URLError as e:
-                    title = _("No lyrics found for\n %s") % song("~basename")
+                except error.HTTPError or error.URLError as e:
+                    title = _("No lyrics found for:\n%s") % song("artist") + ' - ' + song("title")
                     self._set_italicised(title)
                 else:
                     obj = json.loads(conn)
-                    lyrics = obj['lyrics']
+                    lyrics = obj["lyrics"] 
+                    if lyrics.find("\n\n\n\n") != -1: # Clean up poorly formated lyrics
+                        lyrics = lyrics.replace("\n\n", "\n").replace("\n\n\n\n", "\n\n")
                     self.textbuffer.set_text(lyrics)
                     self.adjustment.set_value(0)    # Scroll to the top.
                     self.textview.show()
