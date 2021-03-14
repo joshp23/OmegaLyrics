@@ -16,3 +16,6 @@ git clone https://github.com/joshp23/OmegaLyrics.git ~/.config/quodlibet/plugins
 ---
 Credit:
 This plugin builds on / borrows from the native Quod Libet plugins `View Lyrics` and `Web Lyrics` 
+
+### Tips
+Dogecoin: DARhgg9q3HAWYZuN95DKnFonADrSWUimy3
