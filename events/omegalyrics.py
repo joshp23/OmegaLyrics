@@ -1,6 +1,6 @@
 #
 # Omega Lyrics: a Quod Libet plugin for viewing lyrics.
-# Version: 0.0.03
+# Version: 0.0.4
 #
 # Copyright 2008, 2011, 2012 Vasiliy Faronov <vfaronov@gmail.com>
 #           2013-17 Nick Boultbee
@@ -29,12 +29,15 @@ import socket
 import json
 
 # TODO: GTK config to set alternative url
-base_url = ("https://api.lyrics.ovh/v1/%s/%s")
+#base_url = ("http://localhost:8080")
+base_url = ("https://api.lyrics.ovh")
+full_url = base_url + ("/v1/%s/%s")
+
 def create_api_fetch_url(song):
     artist, title = song("artist"), song("title")
     artist = quote(artist.encode('utf-8'))
     title = quote(title.encode('utf-8'))
-    return base_url % (artist, title)
+    return full_url % (artist, title)
   
 class OmegaLyrics(EventPlugin, UserInterfacePlugin):
     """A plugin for viewing lyrics in the main window."""
@@ -107,7 +110,7 @@ class OmegaLyrics(EventPlugin, UserInterfacePlugin):
                     ctx = ssl.create_default_context()
                     ctx.check_hostname = False
                     ctx.verify_mode = ssl.CERT_NONE
-                    conn = request.urlopen(fetch_url, timeout=.6, context=ctx).read()
+                    conn = request.urlopen(fetch_url, timeout=4, context=ctx).read()
                 except error.HTTPError or error.URLError as e:
                     title = _("No lyrics found for:\n%s") % song("artist") + ' - ' + song("title")
                     self._set_italicised(title)
