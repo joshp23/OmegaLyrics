@@ -1,6 +1,6 @@
 #
 # Omega Lyrics: a Quod Libet plugin for viewing lyrics.
-# Version: 0.0.2
+# Version: 0.0.03
 #
 # Copyright 2008, 2011, 2012 Vasiliy Faronov <vfaronov@gmail.com>
 #           2013-17 Nick Boultbee
