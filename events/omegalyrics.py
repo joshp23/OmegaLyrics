@@ -24,6 +24,8 @@ from quodlibet.util.songwrapper import SongWrapper
 
 from urllib import request, error
 from urllib.parse import quote
+import ssl
+import socket
 import json
 
 # TODO: GTK config to set alternative url
@@ -102,9 +104,15 @@ class OmegaLyrics(EventPlugin, UserInterfacePlugin):
             else:
                 fetch_url = create_api_fetch_url(song)
                 try:
-                    conn = request.urlopen(fetch_url, timeout=4.0).read()
+                    ctx = ssl.create_default_context()
+                    ctx.check_hostname = False
+                    ctx.verify_mode = ssl.CERT_NONE
+                    conn = request.urlopen(fetch_url, timeout=.6, context=ctx).read()
                 except error.HTTPError or error.URLError as e:
                     title = _("No lyrics found for:\n%s") % song("artist") + ' - ' + song("title")
+                    self._set_italicised(title)
+                except socket.timeout as e:
+                    title = _("Timed out searching for:\n%s") % song("artist") + ' - ' + song("title")
                     self._set_italicised(title)
                 else:
                     obj = json.loads(conn)
